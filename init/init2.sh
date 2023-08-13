@@ -1,22 +1,12 @@
 #!/bin/bash
 
-source ./errors.sh
+
+script_path="${BASH_SOURCE[0]}"
+current_directory=$(dirname "$(readlink -f "$script_path")")
+
+source $current_directory/errors.sh
 
 check_root
-PYTHON_VERSION=$1
-
-# check appname was supplied as argument
-if [ "$PYTHON_VERSION" == "" ]; then
-echo "Usage:"
-echo "  $ install_os_prereq.sh [python-version]"
-echo
-echo "  Python version is 2 or 3 and defaults to 3 if not specified. Subversion"
-echo "  of Python will be determined during runtime. The required Python version"
-echo "  has to be installed and available globally."
-echo
-exit 1
-fi
-
 # Default python version to 3. OS has to have it installed.
 if [ "$PYTHON_VERSION" == "" ]; then
 PYTHON_VERSION=3
@@ -38,8 +28,6 @@ fi
 # Install required packages
 apt update
 apt install -y python3 python3-pip python3-venv nginx gunicorn git
-script_path="${BASH_SOURCE[0]}"
-current_directory=$(dirname "$(readlink -f "$script_path")")
 repository_url=git@github.com:Sinamzz/djangosocial.git
 # Create and activate a virtual environment
 python3 -m venv control_panel_venv
