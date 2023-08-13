@@ -4,9 +4,10 @@
 script_path="${BASH_SOURCE[0]}"
 current_directory=$(dirname "$(readlink -f "$script_path")")
 
-source $current_directory/errors.sh
-
-check_root
+if [[ ! -x "$0" ]]; then
+    echo "File does not have execute permission. Exiting with code 1."
+    exit 1
+fi
 # Default python version to 3. OS has to have it installed.
 if [ "$PYTHON_VERSION" == "" ]; then
 PYTHON_VERSION=3
