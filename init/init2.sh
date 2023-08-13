@@ -4,18 +4,6 @@
 script_path="${BASH_SOURCE[0]}"
 current_directory=$(dirname "$(readlink -f "$script_path")")
 
-if [[ ! -x "$0" ]]; then
-    echo "File does not have execute permission. Exiting with code 1."
-    exit 1
-fi
-# Default python version to 3. OS has to have it installed.
-if [ "$PYTHON_VERSION" == "" ]; then
-PYTHON_VERSION=3
-fi
-
-if [ "$PYTHON_VERSION" != "3" -a "$PYTHON_VERSION" != "2" ]; then
-error_exit "Invalid Python version specified. Acceptable values are 2 or 3 (default)"
-
 echo "Please enter domain enter ip to set on server ip: "
 read domain
 
