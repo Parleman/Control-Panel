@@ -33,7 +33,7 @@ cd ..
 python -m venv control_panel_venv
 source control_panel_venv/bin/activate
 # Install project dependencies
-cd current_directory
+cd $current_directory
 cd ..
 pip3 install -r panel/requirements.txt
 
@@ -67,7 +67,7 @@ python3 panel/manage.py createsuperuser
 sudo tee /etc/nginx/sites-available/control_panel <<EOF
 server {
 
-  server_name 127.0.0.1 $saved_domain;
+  server_name 0.0.0.0 $saved_domain;
   access_log /var/log/nginx/domain-access.log;
 
   location / {
