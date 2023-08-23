@@ -35,6 +35,7 @@ source control_panel_venv/bin/activate
 # Install project dependencies
 cd $current_directory
 cd ..
+
 pip3 install -r panel/requirements.txt
 
 # Apply migrations
