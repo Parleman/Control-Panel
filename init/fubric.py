@@ -29,12 +29,14 @@ def setup_environment(c):
     # Install Python and pip based on distribution
     if "debian" in issue_content or "ubuntu" or 'Mint' or 'Debian' or 'Ubuntu' or 'mint' in issue_content:
         c.sudo("apt-get update && apt-get install -y python3 python3-pip nginx gunicorn")
+        print("Installed in debian")
     elif "centos" in issue_content or "red hat" or 'CentOS' or 'Red hat' in issue_content:
         c.sudo("yum install -y python3 python3-pip nginx gunicorn")
 
     # Create and activate virtual environment
     setup_venv_command = f"cd {current_directory} && cd .. && cd panel && python3 -m venv venv && source venv/bin/activate"
     c.run(setup_venv_command)
+    print('venv activated')
 
 @task
 def install_dependencies(c):
@@ -46,6 +48,7 @@ def install_dependencies(c):
         "python3 manage.py createsuperuser"
     ]
     c.run(" && ".join(install_commands))
+    print('packages installed')
 
 @task
 def setup_nginx_config(c):
@@ -66,15 +69,18 @@ def setup_nginx_config(c):
                    f'    }}\n' \
                    f'}}'
     print(nginx_config)
+    print('nginx configed successfully')
     nginx_config_path = "/etc/nginx/sites-available/control_panel"
     c.run(f"echo '{nginx_config}' | sudo tee {nginx_config_path}")
     c.sudo(f"ln -s {nginx_config_path} /etc/nginx/sites-enabled")
     c.sudo("systemctl restart nginx")
+    print('nginx restarted')
 
 @task
 def run_gunicorn(c):
     run_gunicorn_command = f"cd {current_directory} && cd .. && cd panel && gunicorn panel.wsgi:application -b 127.0.0.1:8000 --daemon"
     c.run(run_gunicorn_command)
+    print('runned gunicorn')
 
 @task
 def success(c):

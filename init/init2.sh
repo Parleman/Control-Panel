@@ -15,8 +15,26 @@ else
 fi
 
 # Install required packages
-apt update
-apt install -y python3 python3-pip python3-venv nginx gunicorn
+if [ -f /etc/os-release ]; then
+    source /etc/os-release
+    if [[ "$ID" == "ubuntu" ]]; then
+        sudo apt-get update
+        sudo apt-get install -y nginx gunicorn python3 python3-pip python3-venv
+
+    if [[ "$ID" == "debian" ]]; then
+        sudo apt-get update
+        sudo apt-get install -y nginx gunicorn python3 python3-pip python3-venv
+    elif [[ "$ID" == "centos" ]]; then
+        sudo yum update -y
+        sudo yum install -y nginx gunicorn python3 python3-venv python3-pip
+    else
+        echo "Only debian - centos - ubuntu supported."
+        exit 1
+    fi
+else
+    echo "Linux distro can not be identified"
+    exit 1
+fi
 # repository_url=git@github.com:Sinamzz/djangosocial.git
 # Create and activate a virtual environment
 python3 -m venv control_panel_venv
