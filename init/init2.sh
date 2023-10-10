@@ -19,14 +19,14 @@ if [ -f /etc/os-release ]; then
     source /etc/os-release
     if [[ "$ID" == "ubuntu" ]]; then
         sudo apt-get update
-        sudo apt-get install -y nginx gunicorn python3 python3-pip python3-venv
+        sudo apt-get install -y nginx gunicorn python3 python3-pip python3-venv ufw
 
     if [[ "$ID" == "debian" ]]; then
         sudo apt-get update
-        sudo apt-get install -y nginx gunicorn python3 python3-pip python3-venv
+        sudo apt-get install -y nginx gunicorn python3 python3-pip python3-venv ufw
     elif [[ "$ID" == "centos" ]]; then
         sudo yum update -y
-        sudo yum install -y nginx gunicorn python3 python3-venv python3-pip
+        sudo yum install -y nginx gunicorn python3 python3-venv python3-pip ufw
     else
         echo "Only debian - centos - ubuntu supported."
         exit 1
